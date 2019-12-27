@@ -1,3 +1,4 @@
+-- Script home: https://github.com/d87/mpv-persist-properties
 local utils = require "mp.utils"
 local msg = require "mp.msg"
 
