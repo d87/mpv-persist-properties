@@ -61,8 +61,12 @@ local got_unsaved_changed = false
 local function onInitialLoad()
     properties = load_config(PCONFIG)
 
-    for name, value in pairs(properties) do
-        mp.set_property_number(name, value)
+    for i, property in ipairs(persisted_properties) do
+        local name = property
+        local value = properties[name]
+        if value then
+            mp.set_property_native(name, value)
+        end
     end
 
     for i, property in ipairs(persisted_properties) do
