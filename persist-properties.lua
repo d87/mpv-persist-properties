@@ -5,7 +5,7 @@ local msg = require "mp.msg"
 local opts = {
     properties = "volume,sub-scale",
 }
-(require 'mp.options').read_options(opts)
+(require 'mp.options').read_options(opts, "persist_properties")
 
 local CONFIG_ROOT = (os.getenv('APPDATA') or os.getenv('HOME')..'/.config')..'/mpv/'
 local PCONFIG = CONFIG_ROOT..'persistent_config.json';
