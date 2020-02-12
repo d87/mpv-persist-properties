@@ -8,6 +8,13 @@ local opts = {
 (require 'mp.options').read_options(opts, "persist_properties")
 
 local CONFIG_ROOT = (os.getenv('APPDATA') or os.getenv('HOME')..'/.config')..'/mpv/'
+if not utils.file_info(CONFIG_ROOT) then
+    -- On Windows if using portable_config dir, APPDATA mpv folder isn't auto-created
+    -- In more recent mpv versions there's a mp.get_script_directory function, but i'm not using it for compatiblity
+    local mpv_conf_path = mp.find_config_file("scripts") -- finds where the scripts folder is located
+    local mpv_conf_dir = utils.split_path(mpv_conf_path)
+    CONFIG_ROOT = mpv_conf_dir
+end
 local PCONFIG = CONFIG_ROOT..'persistent_config.json';
 
 local function split(input)
