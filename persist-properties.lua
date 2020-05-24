@@ -71,7 +71,7 @@ local function onInitialLoad()
     for i, property in ipairs(persisted_properties) do
         local name = property
         local value = properties[name]
-        if value then
+        if value ~= nil then
             mp.set_property_native(name, value)
         end
     end
