@@ -4,6 +4,7 @@ local msg = require "mp.msg"
 
 local opts = {
     properties = "volume,sub-scale",
+    save_on = "shutdown",
 }
 (require 'mp.options').read_options(opts, "persist_properties")
 
@@ -103,10 +104,18 @@ local function onInitialLoad()
     isInitialized = true
 end
 
-mp.register_event("file-loaded", onInitialLoad)
-mp.register_event("end-file", function()
-    if got_unsaved_changed then
-        save_config(PCONFIG, properties)
-    end
-end)
-
+if opts.save_on == "shutdown" then
+	onInitialLoad()
+	mp.register_event("shutdown", function()
+		if got_unsaved_changed then
+			save_config(PCONFIG, properties)
+		end
+	end)
+elseif opts.save_on == "end-file" then
+	mp.register_event("file-loaded", onInitialLoad)
+	mp.register_event("end-file", function()
+		if got_unsaved_changed then
+			save_config(PCONFIG, properties)
+		end
+	end)
+end
