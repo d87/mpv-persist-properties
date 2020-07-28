@@ -99,14 +99,12 @@ local function onInitialLoad()
         end)
     end
 
-    mp.unregister_event(onInitialLoad)
     isInitialized = true
 end
 
-mp.register_event("file-loaded", onInitialLoad)
-mp.register_event("end-file", function()
+onInitialLoad()
+mp.register_event("shutdown", function()
     if got_unsaved_changed then
         save_config(PCONFIG, properties)
     end
 end)
-
