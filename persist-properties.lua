@@ -42,6 +42,10 @@ local function load_config(file)
         local jsonString = f:read()
         f:close()
 
+        if jsonString == nil then
+            return {}
+        end
+
         local props = utils.parse_json(jsonString)
         if props then
             return props
